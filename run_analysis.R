@@ -55,3 +55,39 @@ activity_names <- activity_names$V2
 # Change the numbers of the activities for the names.
 data_activities <- mutate(data_mean_std,
                           Activity = activity_names[data_mean_std$Activity])
+
+## Step 4: Label the data set with descriptive variable names.
+
+# Function that detects whether the first letter of a string is "t" or "f" and
+# changes it into "time" or "freq".
+change_letter <- function(string) {
+        if (substr(string, 1, 1) == "t")  {
+                return(paste0("time", substr(string, 2, nchar(string))))
+        }
+        else if (substr(string, 1, 1) == "f") {
+                return(paste0("freq", substr(string, 2, nchar(string))))
+        }
+        else {
+                return(string)
+        }
+}
+
+# Apply that function to all the column names.
+names(data_activities) <- sapply(names(data_activities), change_letter)
+
+# Substitute abbreviations for longer expressions.
+names(data_activities) <- gsub("Acc", "Acceleration", names(data_activities))
+names(data_activities) <- gsub("Gyro", "Gyroscope", names(data_activities))
+names(data_activities) <- gsub("Mag", "Magnitude", names(data_activities))
+names(data_activities) <- gsub("BodyBody", "Body", names(data_activities))
+
+## Step 5: Creates a second data set with the average of each variable for each
+## activity and each subject.
+
+# Group by subject and activity and then use summarise every column.
+data_summary <- data_activities %>%
+                group_by(Subject, Activity) %>%
+                summarise_each(funs(mean))
+
+# Finally we write the last data frame to a txt file.
+write.table(data_summary, file = "output.txt", row.name=FALSE)

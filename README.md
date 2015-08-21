@@ -1,6 +1,4 @@
----
-output: html_document
----
+
 # getting-and-cleaning-data
 Repository for the project of the Getting and Cleaning Data course in Coursera.
 
@@ -13,6 +11,8 @@ It needs to perform five different steps, indicated in the instructions for the 
 3. Uses descriptive activity names to name the activities in the data set
 4. Appropriately labels the data set with descriptive variable names. 
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+In addition to explaining what is done in this document the code is well organized and contains many comments to try to make it as easy to understand as possible.
 
 ## Step 1: Merge the training and the test sets to create one data set
 
@@ -29,8 +29,13 @@ If we look into the file features_info.txt from the data set we can see that the
 We select now only the columns whose names contains the words "mean" or "std". We notice that some variables contain meanFreq in their names, and they are removed. We are only considering the names that end in -mean() or -std(). meanFreq() is the weighted average of the frequency components to obtain a mean frequency and will not be considered here, as they are not the mean of a single variable.
 
 ## Step 3: Use descriptive activity names to name the activities in the data set
+
 In the first place we load the names of the activities from the activity_labels.txt file. We keep them as a vector. Then we simply replace the numbers in the Activity column with the corresponding names.
 
-## Step 4: Appropriately labels the data set with descriptive variable names. 
+## Step 4: Appropriately labels the data set with descriptive variable names.
+
+In order to label the data set with descriptive variable names we need the information about the variables contained in features_info.txt. It is worth noting that the names are already reasonably descriptive. We only change the letters t and f into time and freq respectively. Acc, Gyro and Mag mean Accelerometer, Gyroscope and Magnitude, and be substituted too. Sometimes Body appears twice in a name, we change those into just one.
 
 ## Step 5: From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+We use the function group_by() and summarise_each() from the dplyr package in order to compute the mean of all the variables for each activity and each subject. We end up with 180 rows, with correspond to the 6 different activities from the 30 different subjects.
