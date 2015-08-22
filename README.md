@@ -45,7 +45,7 @@ In order to label the data set with descriptive variable names we need the infor
 
 We use the function group_by() and summarise_each() from the dplyr package in order to compute the mean of all the variables for each activity and each subject. We end up with 180 rows, with correspond to the 6 different activities from the 30 different subjects.
 
-Finally we write a file calle output.txt containing the summary. In order to read it back into R, the following function can be used, provided the file is in the workspace:
+Finally we write a file calle output.txt containing the summary. In order to read it back into R, the following function can be used, provided the file is in the working directory:
 
 <code>
 data <- read.table("./output.txt", header = TRUE)

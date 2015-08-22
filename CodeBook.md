@@ -1,5 +1,7 @@
 ## Codebook for the Getting and Cleaning Data Project
 
+It is worth noting that the variables that are just three components in the directions of a cartesian coordinate system of a measurement are grouped together, in the understanding that it makes this codebook easier to read.
+
 "Subject"
 
   * Identification number for the subject
